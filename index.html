@@ -5,6 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Addon Recommendations - Guild Guide</title>
     <style>
+      :root {
+        /* Dark theme colors */
+        --bg-primary: #0d1117;
+        --bg-secondary: #161b22;
+        --bg-tertiary: #21262d;
+        --bg-hover: #30363d;
+        --text-primary: #c9d1d9;
+        --text-secondary: #8b949e;
+        --text-bright: #f0f6fc;
+        --accent-primary: #58a6ff;
+        --accent-secondary: #4ba0f6;
+        --border-color: #21262d;
+        --code-bg: #161b22;
+        --note-bg: #161b22;
+        --note-border: #21262d;
+      }
+
+      [data-theme="light"] {
+        /* Light theme colors - warm and easy on the eyes */
+        --bg-primary: #ebe9e6;
+        --bg-secondary: #f2f0ed;
+        --bg-tertiary: #d9d7d4;
+        --bg-hover: #e3e1de;
+        --text-primary: #2d2d2d;
+        --text-secondary: #5c5c5c;
+        --text-bright: #1a1a1a;
+        --accent-primary: #0969da;
+        --accent-secondary: #0550ae;
+        --border-color: #c8c6c3;
+        --code-bg: #e8e6e3;
+        --note-bg: #e8e6e3;
+        --note-border: #c8c6c3;
+      }
+
       * {
         margin: 0;
         padding: 0;
@@ -12,14 +46,15 @@
       }
 
       body {
-        background-color: #0d1117;
-        color: #c9d1d9;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
         font-family:
           -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica,
           Arial, sans-serif;
         font-size: 16px;
         line-height: 1.6;
         padding: 20px;
+        transition: background-color 0.3s ease, color 0.3s ease;
       }
 
       .container {
@@ -29,16 +64,16 @@
       }
 
       h1 {
-        color: #f0f6fc;
+        color: var(--text-bright);
         font-size: 2em;
         font-weight: 600;
         margin-bottom: 0.5em;
         padding-bottom: 0.3em;
-        border-bottom: 1px solid #21262d;
+        border-bottom: 1px solid var(--border-color);
       }
 
       h2 {
-        color: #4ba0f6;
+        color: var(--accent-secondary);
         font-size: 1.5em;
         font-weight: 600;
         margin-top: 1.5em;
@@ -62,7 +97,7 @@
       }
 
       h3 {
-        color: #f0f6fc;
+        color: var(--text-bright);
         font-size: 1.25em;
         font-weight: 600;
         margin-top: 1.2em;
@@ -115,13 +150,13 @@
       }
 
       .command-badge {
-        background-color: #161b22;
-        color: #58a6ff;
+        background-color: var(--code-bg);
+        color: var(--accent-primary);
         padding: 4px 10px;
         border-radius: 3px;
         font-family: "Consolas", "Monaco", "Courier New", monospace;
         font-size: 0.85em;
-        border: 1px solid #21262d;
+        border: 1px solid var(--border-color);
         white-space: nowrap;
       }
 
@@ -130,8 +165,13 @@
         color: #ffffff;
       }
 
+      [data-theme="light"] .description-badge {
+        background-color: #5a6c7d;
+        color: #ffffff;
+      }
+
       h4 {
-        color: #8b949e;
+        color: var(--text-secondary);
         font-size: 1em;
         font-weight: 600;
         margin-top: 1em;
@@ -143,7 +183,7 @@
 
       p {
         margin-bottom: 1em;
-        color: #c9d1d9;
+        color: var(--text-primary);
       }
 
       ul,
@@ -154,12 +194,12 @@
 
       li {
         margin-bottom: 0.25em;
-        color: #c9d1d9;
+        color: var(--text-primary);
       }
 
       code {
-        background-color: #161b22;
-        color: #f0f6fc;
+        background-color: var(--code-bg);
+        color: var(--text-bright);
         padding: 0.2em 0.4em;
         border-radius: 3px;
         font-family: "Consolas", "Monaco", "Courier New", monospace;
@@ -167,13 +207,13 @@
       }
 
       pre {
-        background-color: #161b22;
-        color: #c9d1d9;
+        background-color: var(--code-bg);
+        color: var(--text-primary);
         padding: 16px;
         border-radius: 6px;
         overflow-x: auto;
         margin-bottom: 1em;
-        border: 1px solid #21262d;
+        border: 1px solid var(--border-color);
       }
 
       pre code {
@@ -182,7 +222,7 @@
       }
 
       a {
-        color: #58a6ff;
+        color: var(--accent-primary);
         text-decoration: none;
       }
 
@@ -194,14 +234,14 @@
         max-width: 100%;
         height: auto;
         border-radius: 6px;
-        border: 1px solid #21262d;
+        border: 1px solid var(--border-color);
         margin: 1em 0;
         display: block;
       }
 
       .img-caption {
         text-align: center;
-        color: #8b949e;
+        color: var(--text-secondary);
         font-size: 0.9em;
         font-style: italic;
         margin-top: -0.5em;
@@ -209,16 +249,16 @@
       }
 
       blockquote {
-        border-left: 3px solid #58a6ff;
+        border-left: 3px solid var(--accent-primary);
         padding-left: 1em;
         margin: 1em 0;
-        color: #8b949e;
+        color: var(--text-secondary);
         font-style: italic;
       }
 
       hr {
         border: none;
-        border-top: 1px solid #21262d;
+        border-top: 1px solid var(--border-color);
         margin: 1em 0;
       }
 
@@ -247,7 +287,7 @@
       }
 
       .section-wrapper {
-        border-left: 4px solid #21262d;
+        border-left: 4px solid var(--border-color);
         padding-left: 20px;
         margin-bottom: 2em;
       }
@@ -314,20 +354,24 @@
       }
 
       strong {
-        color: #f0f6fc;
+        color: var(--text-bright);
         font-weight: 600;
       }
 
+      [data-theme="light"] strong {
+        color: #1a1a1a;
+      }
+
       .note {
-        background-color: #1c2128;
-        border-left: 3px solid #58a6ff;
+        background-color: var(--note-bg);
+        border-left: 3px solid var(--accent-primary);
         padding: 12px 16px;
         margin: 1em 0;
         border-radius: 0 6px 6px 0;
       }
 
       .note strong {
-        color: #58a6ff;
+        color: var(--accent-primary);
       }
 
       .note-green {
@@ -343,7 +387,7 @@
       }
 
       .image-toggle {
-        color: #58a6ff;
+        color: var(--accent-primary);
         cursor: pointer;
         user-select: none;
         font-size: 1em;
@@ -391,18 +435,18 @@
 
       .addon-table td {
         padding: 12px 16px;
-        border: 1px solid #21262d;
+        border: 1px solid var(--border-color);
         vertical-align: top;
       }
 
       .addon-table td:first-child {
         font-weight: 600;
-        color: #f0f6fc;
+        color: var(--text-bright);
         width: 30%;
       }
 
       .addon-table td:last-child {
-        color: #c9d1d9;
+        color: var(--text-primary);
         width: 70%;
       }
 
@@ -418,9 +462,9 @@
         position: absolute;
         top: 8px;
         right: 8px;
-        background-color: #21262d;
-        color: #c9d1d9;
-        border: 1px solid #30363d;
+        background-color: var(--bg-tertiary);
+        color: var(--text-primary);
+        border: 1px solid var(--bg-hover);
         border-radius: 4px;
         padding: 6px 12px;
         font-size: 0.85em;
@@ -432,8 +476,8 @@
       }
 
       .copy-button:hover {
-        background-color: #30363d;
-        border-color: #58a6ff;
+        background-color: var(--bg-hover);
+        border-color: var(--accent-primary);
       }
 
       .copy-button.copied {
@@ -445,9 +489,61 @@
       .pre-wrapper pre {
         padding-top: 40px;
       }
+
+      /* Theme Switcher Button */
+      .theme-switcher {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: 2px solid var(--border-color);
+        background: var(--bg-secondary);
+        color: var(--text-bright);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1000;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        outline: none;
+      }
+
+      .theme-switcher:hover {
+        background: var(--bg-hover);
+        transform: scale(1.1) rotate(15deg);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      .theme-switcher:active {
+        transform: scale(0.95);
+      }
+
+      [data-theme="light"] .theme-switcher {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+
+      [data-theme="light"] .theme-switcher:hover {
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+      }
+
+      .theme-icon {
+        display: inline-block;
+        transition: transform 0.3s ease;
+      }
+
+      .theme-switcher:hover .theme-icon {
+        transform: rotate(-15deg);
+      }
     </style>
   </head>
   <body>
+    <button class="theme-switcher" id="themeSwitcher" aria-label="Toggle theme">
+      <span class="theme-icon">🌙</span>
+    </button>
     <div class="container">
       <h1>War Within → Midnight Addons Tips and Tricks</h1>
       <div>
@@ -1922,7 +2018,7 @@
       </div>
     </div>
     <hr />
-    <p style="text-align: center; color: #8b949e; font-size: 0.9em">
+    <p style="text-align: center; font-size: 0.9em; color: var(--text-secondary);">
       Last updated: 2026-01-27 23:36:56
     </p>
     <script>
@@ -1937,6 +2033,37 @@
         toggle.classList.toggle("collapsed");
         content.classList.toggle("collapsed");
       }
+
+      // Theme Switcher Logic
+      (function() {
+        const themeSwitcher = document.getElementById('themeSwitcher');
+        const themeIcon = themeSwitcher.querySelector('.theme-icon');
+        const html = document.documentElement;
+        
+        // Load saved theme or default to dark
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        
+        function setTheme(theme) {
+          if (theme === 'light') {
+            html.setAttribute('data-theme', 'light');
+            themeIcon.textContent = '🌞';
+          } else {
+            html.removeAttribute('data-theme');
+            themeIcon.textContent = '🌙';
+          }
+          localStorage.setItem('theme', theme);
+        }
+        
+        // Apply saved theme immediately
+        setTheme(savedTheme);
+        
+        // Toggle theme on button click
+        themeSwitcher.addEventListener('click', function() {
+          const currentTheme = html.hasAttribute('data-theme') ? 'light' : 'dark';
+          const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+          setTheme(newTheme);
+        });
+      })();
 
       // Add copy buttons to all pre tags on page load
       document.addEventListener("DOMContentLoaded", function () {
