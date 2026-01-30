@@ -107,14 +107,31 @@
       .addon-header {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
         margin-bottom: 0.5em;
+        flex-wrap: wrap;
+        gap: 10px;
       }
 
       .addon-header-left {
         display: flex;
+        flex-direction: column;
+        gap: 8px;
+        flex: 1;
+        min-width: 0;
+      }
+
+      .addon-title-row {
+        display: flex;
         align-items: center;
         gap: 10px;
+      }
+
+      .addon-badge-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-items: center;
       }
 
       .addon-header h3 {
@@ -130,7 +147,6 @@
         font-size: 0.7em;
         font-weight: 600;
         white-space: nowrap;
-        margin-left: 12px;
       }
 
       .addon-badge.green {
@@ -584,12 +600,16 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a href="https://www.curseforge.com/wow/addons/bug-grabber"
-                    >BugGrabber</a
-                  >
-                </h3>
-                <span class="addon-badge red">Must Have</span>
+                <div class="addon-title-row">
+                  <h3>
+                    <a href="https://www.curseforge.com/wow/addons/bug-grabber"
+                      >BugGrabber</a
+                    >
+                  </h3>
+                </div>
+                <div class="addon-badge-row">
+                  <span class="addon-badge red">Must Have</span>
+                </div>
               </div>
             </div>
             <ul>
@@ -608,12 +628,16 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a href="https://www.curseforge.com/wow/addons/bugsack"
-                    >BugSack</a
-                  >
-                </h3>
-                <span class="addon-badge red">Must Have</span>
+                <div class="addon-title-row">
+                  <h3>
+                    <a href="https://www.curseforge.com/wow/addons/bugsack"
+                      >BugSack</a
+                    >
+                  </h3>
+                </div>
+                <div class="addon-badge-row">
+                  <span class="addon-badge red">Must Have</span>
+                </div>
               </div>
               <span class="command-badge">/bugsack show</span>
             </div>
@@ -638,13 +662,17 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a
-                    href="https://www.curseforge.com/wow/addons/simple-addon-manager"
-                    >Simple Addon Manager</a
-                  >
-                </h3>
-                <span class="addon-badge green">Recommended</span>
+                <div class="addon-title-row">
+                  <h3>
+                    <a
+                      href="https://www.curseforge.com/wow/addons/simple-addon-manager"
+                      >Simple Addon Manager</a
+                    >
+                  </h3>
+                </div>
+                <div class="addon-badge-row">
+                  <span class="addon-badge green">Recommended</span>
+                </div>
               </div>
               <span class="command-badge">Replaces System Menu -> Addons</span>
             </div>
@@ -684,15 +712,19 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a
-                    href="https://www.curseforge.com/wow/addons/betterblizzframes"
-                    >BetterBlizzFrames</a
+                <div class="addon-title-row">
+                  <h3>
+                    <a
+                      href="https://www.curseforge.com/wow/addons/betterblizzframes"
+                      >BetterBlizzFrames</a
+                    >
+                  </h3>
+                </div>
+                <div class="addon-badge-row">
+                  <span class="addon-badge green"
+                    >Recommended with base frames</span
                   >
-                </h3>
-                <span class="addon-badge green"
-                  >Recommended with base frames</span
-                >
+                </div>
               </div>
               <span class="command-badge">/bbf</span>
             </div>
@@ -726,12 +758,14 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a
-                    href="https://www.curseforge.com/wow/addons/framecolor-hud-action-bar-color"
-                    >FrameColor - Dark Mode & Custom Color UI</a
-                  >
-                </h3>
+                <div class="addon-title-row">
+                  <h3>
+                    <a
+                      href="https://www.curseforge.com/wow/addons/framecolor-hud-action-bar-color"
+                      >FrameColor - Dark Mode & Custom Color UI</a
+                    >
+                  </h3>
+                </div>
               </div>
               <span class="command-badge">/fc</span>
             </div>
@@ -771,12 +805,14 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a
-                    href="https://www.curseforge.com/wow/addons/framecolor-addonskins"
-                    >AddOnSkins</a
-                  >
-                </h3>
+                <div class="addon-title-row">
+                  <h3>
+                    <a
+                      href="https://www.curseforge.com/wow/addons/framecolor-addonskins"
+                      >AddOnSkins</a
+                    >
+                  </h3>
+                </div>
                 <!-- <span class="addon-badge yellow">Optional visuals</span> -->
               </div>
             </div>
@@ -791,11 +827,13 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a href="https://www.curseforge.com/wow/addons/healthbarcolor"
-                    >HealthBarColor - Health Bar Color</a
-                  >
-                </h3>
+                <div class="addon-title-row">
+                  <h3>
+                    <a href="https://www.curseforge.com/wow/addons/healthbarcolor"
+                      >HealthBarColor - Health Bar Color</a
+                    >
+                  </h3>
+                </div>
                 <!-- <span class="addon-badge yellow">Optional visuals</span> -->
               </div>
               <span class="command-badge">/hbc</span>
@@ -866,12 +904,14 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a
-                    href="https://www.curseforge.com/wow/addons/cooldown-manager-centered"
-                    >Cooldown Manager Centered</a
-                  >
-                </h3>
+                <div class="addon-title-row">
+                  <h3>
+                    <a
+                      href="https://www.curseforge.com/wow/addons/cooldown-manager-centered"
+                      >Cooldown Manager Centered</a
+                    >
+                  </h3>
+                </div>
               </div>
               <span class="command-badge">/cdmc</span>
             </div>
@@ -912,12 +952,14 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a
-                    href="https://www.curseforge.com/wow/addons/senseiclassresourcebar"
-                    >SenseiClassResourceBar</a
-                  >
-                </h3>
+                <div class="addon-title-row">
+                  <h3>
+                    <a
+                      href="https://www.curseforge.com/wow/addons/senseiclassresourcebar"
+                      >SenseiClassResourceBar</a
+                    >
+                  </h3>
+                </div>
               </div>
             </div>
             <ul>
@@ -953,12 +995,16 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a href="https://www.curseforge.com/wow/addons/better-timeline"
-                    >Better Timeline</a
-                  >
-                </h3>
-                <span class="addon-badge green">Recommended</span>
+                <div class="addon-title-row">
+                  <h3>
+                    <a href="https://www.curseforge.com/wow/addons/better-timeline"
+                      >Better Timeline</a
+                    >
+                  </h3>
+                </div>
+                <div class="addon-badge-row">
+                  <span class="addon-badge green">Recommended</span>
+                </div>
               </div>
               <span class="command-badge">Edit Mode</span>
             </div>
@@ -984,12 +1030,16 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a href="https://www.curseforge.com/wow/addons/details"
-                    >Details! Damage Meter</a
-                  >
-                </h3>
-                <span class="addon-badge green">Recommended</span>
+                <div class="addon-title-row">
+                  <h3>
+                    <a href="https://www.curseforge.com/wow/addons/details"
+                      >Details! Damage Meter</a
+                    >
+                  </h3>
+                </div>
+                <div class="addon-badge-row">
+                  <span class="addon-badge green">Recommended</span>
+                </div>
               </div>
               <span class="command-badge">/details options</span>
             </div>
@@ -1016,15 +1066,19 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a
-                    href="https://www.curseforge.com/wow/addons/deadly-boss-mods"
-                    >DBM - Deadly Boss Mods (DBM-Core)</a
+                <div class="addon-title-row">
+                  <h3>
+                    <a
+                      href="https://www.curseforge.com/wow/addons/deadly-boss-mods"
+                      >DBM - Deadly Boss Mods (DBM-Core)</a
+                    >
+                  </h3>
+                </div>
+                <div class="addon-badge-row">
+                  <span class="addon-badge green"
+                    >Recommended without BigWigs</span
                   >
-                </h3>
-                <span class="addon-badge green"
-                  >Recommended without BigWigs</span
-                >
+                </div>
               </div>
               <span class="command-badge">/dbm</span>
             </div>
@@ -1039,12 +1093,16 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a href="https://www.curseforge.com/wow/addons/big-wigs"
-                    >BigWigs Encounter Tools</a
-                  >
-                </h3>
-                <span class="addon-badge green">Recommended without DBM</span>
+                <div class="addon-title-row">
+                  <h3>
+                    <a href="https://www.curseforge.com/wow/addons/big-wigs"
+                      >BigWigs Encounter Tools</a
+                    >
+                  </h3>
+                </div>
+                <div class="addon-badge-row">
+                  <span class="addon-badge green">Recommended without DBM</span>
+                </div>
               </div>
               <span class="command-badge">/bw</span>
             </div>
@@ -1059,12 +1117,16 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a href="https://www.curseforge.com/wow/addons/little-wigs"
-                    >LittleWigs</a
-                  >
-                </h3>
-                <span class="addon-badge green">Recommended with BigWigs</span>
+                <div class="addon-title-row">
+                  <h3>
+                    <a href="https://www.curseforge.com/wow/addons/little-wigs"
+                      >LittleWigs</a
+                    >
+                  </h3>
+                </div>
+                <div class="addon-badge-row">
+                  <span class="addon-badge green">Recommended with BigWigs</span>
+                </div>
               </div>
             </div>
             <ul>
@@ -1077,13 +1139,17 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a
-                    href="https://www.curseforge.com/wow/addons/plater-nameplates"
-                    >Plater Nameplates</a
-                  >
-                </h3>
-                <span class="addon-badge green">Recommended</span>
+                <div class="addon-title-row">
+                  <h3>
+                    <a
+                      href="https://www.curseforge.com/wow/addons/plater-nameplates"
+                      >Plater Nameplates</a
+                    >
+                  </h3>
+                </div>
+                <div class="addon-badge-row">
+                  <span class="addon-badge green">Recommended</span>
+                </div>
               </div>
               <span class="command-badge">/plater</span>
             </div>
@@ -1120,12 +1186,16 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a href="https://www.curseforge.com/wow/addons/platynator"
-                    >Platynator</a
-                  >
-                </h3>
-                <span class="addon-badge green">Recommended</span>
+                <div class="addon-title-row">
+                  <h3>
+                    <a href="https://www.curseforge.com/wow/addons/platynator"
+                      >Platynator</a
+                    >
+                  </h3>
+                </div>
+                <div class="addon-badge-row">
+                  <span class="addon-badge green">Recommended</span>
+                </div>
               </div>
               <span class="command-badge">/platynator</span>
             </div>
@@ -1158,13 +1228,17 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a
-                    href="https://www.curseforge.com/wow/addons/missing-class-buff"
-                    >Missing Class Buff</a
-                  >
-                </h3>
-                <span class="addon-badge green">Recommended</span>
+                <div class="addon-title-row">
+                  <h3>
+                    <a
+                      href="https://www.curseforge.com/wow/addons/missing-class-buff"
+                      >Missing Class Buff</a
+                    >
+                  </h3>
+                </div>
+                <div class="addon-badge-row">
+                  <span class="addon-badge green">Recommended</span>
+                </div>
               </div>
               <span class="command-badge">/mcb</span>
             </div>
@@ -1207,12 +1281,16 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a href="https://www.curseforge.com/wow/addons/mplustimer"
-                    >MPlusTimer</a
-                  >
-                </h3>
-                <span class="addon-badge green">Recommended</span>
+                <div class="addon-title-row">
+                  <h3>
+                    <a href="https://www.curseforge.com/wow/addons/mplustimer"
+                      >MPlusTimer</a
+                    >
+                  </h3>
+                </div>
+                <div class="addon-badge-row">
+                  <span class="addon-badge green">Recommended</span>
+                </div>
               </div>
               <span class="command-badge">/mplustimer</span>
             </div>
@@ -1236,13 +1314,17 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a
-                    href="https://www.curseforge.com/wow/addons/keystone-polaris"
-                    >Keystone Polaris (formerly Keystone Percentage Helper)</a
-                  >
-                </h3>
-                <span class="addon-badge green">Recommended</span>
+                <div class="addon-title-row">
+                  <h3>
+                    <a
+                      href="https://www.curseforge.com/wow/addons/keystone-polaris"
+                      >Keystone Polaris (formerly Keystone Percentage Helper)</a
+                    >
+                  </h3>
+                </div>
+                <div class="addon-badge-row">
+                  <span class="addon-badge green">Recommended</span>
+                </div>
               </div>
               <span class="command-badge">/kpl</span>
             </div>
@@ -1276,12 +1358,16 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a href="https://www.curseforge.com/wow/addons/wildutools"
-                    >!Wildu Tools</a
-                  >
-                </h3>
-                <span class="addon-badge green">Recommended</span>
+                <div class="addon-title-row">
+                  <h3>
+                    <a href="https://www.curseforge.com/wow/addons/wildutools"
+                      >!Wildu Tools</a
+                    >
+                  </h3>
+                </div>
+                <div class="addon-badge-row">
+                  <span class="addon-badge green">Recommended</span>
+                </div>
               </div>
               <span class="command-badge">/wt</span>
             </div>
@@ -1373,12 +1459,16 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a href="https://www.curseforge.com/wow/addons/leatrix-plus"
-                    >Leatrix Plus</a
-                  >
-                </h3>
-                <span class="addon-badge green">Recommended</span>
+                <div class="addon-title-row">
+                  <h3>
+                    <a href="https://www.curseforge.com/wow/addons/leatrix-plus"
+                      >Leatrix Plus</a
+                    >
+                  </h3>
+                </div>
+                <div class="addon-badge-row">
+                  <span class="addon-badge green">Recommended</span>
+                </div>
               </div>
               <span class="command-badge">/leaplus</span>
             </div>
@@ -1403,12 +1493,16 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a href="https://www.curseforge.com/wow/addons/leatrix-maps"
-                    >Leatrix Maps</a
-                  >
-                </h3>
-                <span class="addon-badge green">Recommended</span>
+                <div class="addon-title-row">
+                  <h3>
+                    <a href="https://www.curseforge.com/wow/addons/leatrix-maps"
+                      >Leatrix Maps</a
+                    >
+                  </h3>
+                </div>
+                <div class="addon-badge-row">
+                  <span class="addon-badge green">Recommended</span>
+                </div>
               </div>
               <span class="command-badge">/leamaps</span>
             </div>
@@ -1433,13 +1527,17 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a href="https://www.curseforge.com/wow/addons/plumber"
-                    >Plumber</a
-                  >
-                </h3>
-                <span class="addon-badge green">Recommended</span>
-                <span class="addon-badge red">Must Have</span>
+                <div class="addon-title-row">
+                  <h3>
+                    <a href="https://www.curseforge.com/wow/addons/plumber"
+                      >Plumber</a
+                    >
+                  </h3>
+                </div>
+                <div class="addon-badge-row">
+                  <span class="addon-badge green">Recommended</span>
+                  <span class="addon-badge red">Must Have</span>
+                </div>
               </div>
               <span class="command-badge">/plumber</span>
             </div>
@@ -1489,13 +1587,17 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a
-                    href="https://www.curseforge.com/wow/addons/edit-mode-expanded"
-                    >Edit Mode Expanded</a
-                  >
-                </h3>
-                <span class="addon-badge green">Recommended</span>
+                <div class="addon-title-row">
+                  <h3>
+                    <a
+                      href="https://www.curseforge.com/wow/addons/edit-mode-expanded"
+                      >Edit Mode Expanded</a
+                    >
+                  </h3>
+                </div>
+                <div class="addon-badge-row">
+                  <span class="addon-badge green">Recommended</span>
+                </div>
               </div>
               <span class="command-badge"
                 >Adds to the Edit Mode experience</span
@@ -1528,13 +1630,17 @@
           <div class="addon-block">
             <div class="addon-header">
               <div class="addon-header-left">
-                <h3>
-                  <a href="https://www.curseforge.com/wow/addons/eqol"
-                    >Enhance QoL</a
-                  >
-                </h3>
-                <span class="addon-badge green">Recommended</span>
-                <span class="addon-badge red">Must Have</span>
+                <div class="addon-title-row">
+                  <h3>
+                    <a href="https://www.curseforge.com/wow/addons/eqol"
+                      >Enhance QoL</a
+                    >
+                  </h3>
+                </div>
+                <div class="addon-badge-row">
+                  <span class="addon-badge green">Recommended</span>
+                  <span class="addon-badge red">Must Have</span>
+                </div>
               </div>
               <span class="command-badge">/eqol</span>
             </div>
