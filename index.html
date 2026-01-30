@@ -447,6 +447,19 @@
         width: 100%;
         border-collapse: collapse;
         margin-top: 1em;
+        display: table;
+      }
+
+      .addon-table thead {
+        background-color: var(--bg-secondary);
+      }
+
+      .addon-table th {
+        padding: 12px 16px;
+        border: 1px solid var(--border-color);
+        font-weight: 600;
+        color: var(--text-bright);
+        text-align: left;
       }
 
       .addon-table td {
@@ -468,6 +481,82 @@
 
       .enhanceqol-table td:nth-child(2) {
         text-align: center;
+      }
+
+      /* Responsive Tables for Mobile */
+      @media (max-width: 768px) {
+        .addon-table {
+          border: 0;
+        }
+
+        .addon-table thead {
+          display: none;
+        }
+
+        .addon-table tr {
+          display: block;
+          margin-bottom: 12px;
+          border: 1px solid var(--border-color);
+          border-radius: 6px;
+          background-color: var(--bg-secondary);
+        }
+
+        .addon-table td {
+          display: block;
+          border: none;
+          border-bottom: 1px solid var(--border-color);
+          text-align: left !important;
+          padding: 10px 12px;
+        }
+
+        .addon-table td:last-child {
+          border-bottom: none;
+        }
+
+        .addon-table td:before {
+          content: attr(data-label);
+          font-weight: 500;
+          color: var(--text-secondary);
+          display: block;
+          margin-bottom: 6px;
+          font-size: 0.75em;
+          text-transform: uppercase;
+          letter-spacing: 0.8px;
+        }
+
+        /* Special handling for enhanceqol-table */
+        .enhanceqol-table td:nth-child(1):before {
+          content: "Setting";
+        }
+
+        .enhanceqol-table td:nth-child(2):before {
+          content: "Toggle";
+        }
+
+        .enhanceqol-table td:nth-child(3):before {
+          content: "Category";
+        }
+
+        .enhanceqol-table td:nth-child(2) {
+          text-align: left !important;
+        }
+
+        /* For the other addon table (2 column) */
+        .addon-table:not(.enhanceqol-table) td:first-child:before {
+          content: "Addon";
+        }
+
+        .addon-table:not(.enhanceqol-table) td:last-child:before {
+          content: "Description";
+        }
+
+        .addon-table td:first-child {
+          width: 100%;
+        }
+
+        .addon-table td:last-child {
+          width: 100%;
+        }
       }
 
       .pre-wrapper {
