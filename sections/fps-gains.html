@@ -1,0 +1,20 @@
+<div class="section-wrapper fps">
+  <h2 onclick="toggleSection(this)">Possible FPS gains</h2>
+  <div class="section-content collapsed">
+    <p>
+      Some users have reported that running this script increased their FPS.
+      <br />
+      <strong
+        >Warning: The script UNTRACKS ALL TRACKED QUESTS including hidden
+        tracked quests</strong
+      >
+    </p>
+    <p>The script is run directly in your chat box</p>
+    <a
+      href="https://www.reddit.com/r/WowUI/comments/1qk96mg/otherfixworkaroundhidden_tracked_quests_caused_60/"
+      >Link to Reddit Post</a
+    >
+    <h4>Script:</h4>
+    <pre>/run for i=1, 200000 do C_QuestLog.RemoveQuestWatch(i) end</pre>
+  </div>
+</div>
