@@ -877,35 +877,53 @@
       }
 
       async function loadSections(container = document) {
-        const includes = container.querySelectorAll(
-          "[data-include]:not(.loaded)",
+        const includes = Array.from(
+          container.querySelectorAll("[data-include]:not(.loaded)"),
         );
 
-        for (const element of includes) {
+        if (includes.length === 0) return;
+
+        // Fetch all files in parallel
+        const fetchPromises = includes.map(async (element) => {
           const file = element.getAttribute("data-include");
           try {
             const response = await fetch(file);
             if (response.ok) {
               const html = await response.text();
-              element.innerHTML = html;
-              element.classList.add("loaded");
-
-              // Recursively load any nested data-include elements
-              await loadSections(element);
-
-              // If this is the profiles section, load the profiles
-              if (file === "sections/profiles.html") {
-                await loadProfiles();
-              }
+              return { element, file, html, success: true };
             } else {
               console.error(`Failed to load ${file}: ${response.status}`);
-              element.innerHTML = `<p style="color: var(--text-secondary);">Failed to load ${file}</p>`;
-              element.classList.add("loaded");
+              return { element, file, success: false };
             }
           } catch (error) {
             console.error(`Error loading ${file}:`, error);
-            element.innerHTML = `<p style="color: var(--text-secondary);">Error loading ${file}</p>`;
-            element.classList.add("loaded");
+            return { element, file, success: false };
+          }
+        });
+
+        // Wait for all fetches to complete
+        const results = await Promise.all(fetchPromises);
+
+        // Process results and inject HTML
+        for (const result of results) {
+          if (result.success) {
+            result.element.innerHTML = result.html;
+            result.element.classList.add("loaded");
+          } else {
+            result.element.innerHTML = `<p style="color: var(--text-secondary);">Failed to load ${result.file}</p>`;
+            result.element.classList.add("loaded");
+          }
+        }
+
+        // After all current level includes are loaded, recursively load nested ones
+        for (const result of results) {
+          if (result.success) {
+            await loadSections(result.element);
+
+            // If this is the profiles section, load the profiles
+            if (result.file === "sections/profiles.html") {
+              await loadProfiles();
+            }
           }
         }
       }
