@@ -6,7 +6,6 @@
     <title>Addon Recommendations - Guild Guide</title>
     <style>
       :root {
-        /* Dark theme colors */
         --bg-primary: #0d1117;
         --bg-secondary: #161b22;
         --bg-tertiary: #21262d;
@@ -19,11 +18,9 @@
         --border-color: #21262d;
         --code-bg: #161b22;
         --note-bg: #161b22;
-        --note-border: #21262d;
       }
 
       [data-theme="light"] {
-        /* Light theme colors - warm and easy on the eyes */
         --bg-primary: #ebe9e6;
         --bg-secondary: #f2f0ed;
         --bg-tertiary: #d9d7d4;
@@ -36,7 +33,6 @@
         --border-color: #c8c6c3;
         --code-bg: #e8e6e3;
         --note-bg: #e8e6e3;
-        --note-border: #c8c6c3;
       }
 
       * {
@@ -580,9 +576,6 @@
         font-size: 0.85em;
         cursor: pointer;
         transition: all 0.2s ease;
-        font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica,
-          Arial, sans-serif;
       }
 
       .copy-button:hover {
@@ -643,31 +636,6 @@
         transition: opacity 0.2s ease-in;
       }
 
-      /* Loading indicator */
-      .page-loading {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: var(--accent-primary);
-        transform-origin: left;
-        animation: loadingBar 2s ease-in-out infinite;
-        z-index: 9999;
-      }
-
-      @keyframes loadingBar {
-        0% {
-          transform: scaleX(0);
-        }
-        50% {
-          transform: scaleX(0.7);
-        }
-        100% {
-          transform: scaleX(0);
-        }
-      }
-
       [data-theme="light"] .theme-switcher {
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       }
@@ -683,6 +651,12 @@
 
       .theme-switcher:hover .theme-icon {
         transform: rotate(-15deg);
+      }
+
+      .footer {
+        text-align: center;
+        font-size: 0.9em;
+        color: var(--text-secondary);
       }
     </style>
   </head>
@@ -767,80 +741,54 @@
       </div>
     </div>
     <hr />
-    <p
-      style="text-align: center; font-size: 0.9em; color: var(--text-secondary)"
-    >
-      Last updated: 2026-01-31 21:45:23
-    </p>
+    <p class="footer">Last updated: 2026-01-31 21:45:23</p>
     <script>
-      // Add copy buttons to all pre tags
       function addCopyButtons(container = document) {
         const preTags = container.querySelectorAll("pre:not(.has-copy-button)");
 
-        preTags.forEach(function (pre) {
-          // Mark as processed
+        preTags.forEach((pre) => {
           pre.classList.add("has-copy-button");
 
-          // Create wrapper div
           const wrapper = document.createElement("div");
           wrapper.className = "pre-wrapper";
-
-          // Replace pre with wrapper containing pre
           pre.parentNode.insertBefore(wrapper, pre);
           wrapper.appendChild(pre);
 
-          // Create copy button
           const copyButton = document.createElement("button");
           copyButton.className = "copy-button";
           copyButton.textContent = "Copy";
           copyButton.setAttribute("aria-label", "Copy code to clipboard");
 
-          // Add click handler
-          copyButton.addEventListener("click", function () {
-            const text = pre.textContent;
-
-            // Use modern clipboard API
+          copyButton.addEventListener("click", () => {
             navigator.clipboard
-              .writeText(text)
-              .then(function () {
-                // Show success feedback
+              .writeText(pre.textContent)
+              .then(() => {
                 copyButton.textContent = "Copied!";
                 copyButton.classList.add("copied");
-
-                // Reset after 2 seconds
-                setTimeout(function () {
+                setTimeout(() => {
                   copyButton.textContent = "Copy";
                   copyButton.classList.remove("copied");
                 }, 2000);
               })
-              .catch(function (err) {
-                // Fallback for older browsers
-                console.error("Failed to copy text: ", err);
+              .catch((err) => {
+                console.error("Failed to copy:", err);
                 copyButton.textContent = "Failed";
-                setTimeout(function () {
-                  copyButton.textContent = "Copy";
-                }, 2000);
+                setTimeout(() => (copyButton.textContent = "Copy"), 2000);
               });
           });
 
-          // Add button to wrapper
           wrapper.insertBefore(copyButton, pre);
         });
       }
 
-      // Load external HTML sections recursively
       async function loadProfiles() {
         try {
-          console.log("Starting to load profiles...");
           const response = await fetch("sections/profiles/profiles.json");
-          console.log("Profiles JSON response:", response.status);
           const profiles = await response.json();
-          console.log("Loaded profiles:", profiles);
           const container = document.getElementById("profiles-container");
-          console.log("Container found:", container);
 
           if (!container) {
-            console.error("Profiles container not found!");
+            console.error("Profiles container not found");
             return;
           }
 
@@ -850,14 +798,9 @@
             header.textContent = profile.name;
             const pre = document.createElement("pre");
 
-            // Load profile content
             try {
-              console.log(
-                `Loading profile: ${profile.name} from ${profile.source}`,
-              );
               const contentResponse = await fetch(profile.source);
-              const content = await contentResponse.text();
-              pre.textContent = content;
+              pre.textContent = await contentResponse.text();
             } catch (error) {
               console.error(`Failed to load profile ${profile.name}:`, error);
               pre.textContent = "Error loading profile";
@@ -867,9 +810,7 @@
             profileDiv.appendChild(pre);
             container.appendChild(profileDiv);
           }
-          console.log("Profiles loaded successfully");
 
-          // Add copy buttons to the newly created pre tags
           addCopyButtons(container);
         } catch (error) {
           console.error("Failed to load profiles:", error);
@@ -883,14 +824,17 @@
 
         if (includes.length === 0) return;
 
-        // Fetch all files in parallel
         const fetchPromises = includes.map(async (element) => {
           const file = element.getAttribute("data-include");
           try {
             const response = await fetch(file);
             if (response.ok) {
-              const html = await response.text();
-              return { element, file, html, success: true };
+              return {
+                element,
+                file,
+                html: await response.text(),
+                success: true,
+              };
             } else {
               console.error(`Failed to load ${file}: ${response.status}`);
               return { element, file, success: false };
@@ -901,10 +845,8 @@
           }
         });
 
-        // Wait for all fetches to complete
         const results = await Promise.all(fetchPromises);
 
-        // Process results and inject HTML
         for (const result of results) {
           if (result.success) {
             result.element.innerHTML = result.html;
@@ -915,32 +857,16 @@
           }
         }
 
-        // After all current level includes are loaded, recursively load nested ones
         for (const result of results) {
           if (result.success) {
             await loadSections(result.element);
 
-            // If this is the profiles section, load the profiles
             if (result.file === "sections/profiles.html") {
               await loadProfiles();
             }
           }
         }
       }
-
-      // Load sections when page loads
-      document.addEventListener("DOMContentLoaded", async () => {
-        // Add loading indicator
-        const loadingBar = document.createElement("div");
-        loadingBar.className = "page-loading";
-        document.body.appendChild(loadingBar);
-
-        // Load all sections
-        await loadSections();
-
-        // Remove loading indicator
-        loadingBar.remove();
-      });
 
       function toggleSection(header) {
         const content = header.nextElementSibling;
@@ -954,13 +880,11 @@
         content.classList.toggle("collapsed");
       }
 
-      // Theme Switcher Logic
+      // Theme switcher
       (function () {
         const themeSwitcher = document.getElementById("themeSwitcher");
         const themeIcon = themeSwitcher.querySelector(".theme-icon");
         const html = document.documentElement;
-
-        // Load saved theme or default to dark
         const savedTheme = localStorage.getItem("theme") || "dark";
 
         function setTheme(theme) {
@@ -974,20 +898,19 @@
           localStorage.setItem("theme", theme);
         }
 
-        // Apply saved theme immediately
         setTheme(savedTheme);
 
-        // Toggle theme on button click
-        themeSwitcher.addEventListener("click", function () {
+        themeSwitcher.addEventListener("click", () => {
           const currentTheme = html.hasAttribute("data-theme")
             ? "light"
             : "dark";
-          const newTheme = currentTheme === "dark" ? "light" : "dark";
-          setTheme(newTheme);
+          setTheme(currentTheme === "dark" ? "light" : "dark");
         });
       })();
 
-      document.addEventListener("DOMContentLoaded", function () {
+      // Initialize
+      document.addEventListener("DOMContentLoaded", async () => {
+        await loadSections();
         addCopyButtons();
       });
     </script>
