@@ -818,56 +818,72 @@
       }
 
       async function loadSections(container = document) {
-        const includes = Array.from(
-          container.querySelectorAll("[data-include]:not(.loaded)"),
-        );
+        const loadedFiles = new Map();
 
-        if (includes.length === 0) return;
+        // Step 1: Find all files we need (including nested ones)
+        async function findAllFiles(root) {
+          const elements = root.querySelectorAll("[data-include]:not(.loaded)");
+          const filesToLoad = [];
 
-        const fetchPromises = includes.map(async (element) => {
-          const file = element.getAttribute("data-include");
-          try {
-            const response = await fetch(file);
-            if (response.ok) {
-              return {
-                element,
-                file,
-                html: await response.text(),
-                success: true,
-              };
-            } else {
-              console.error(`Failed to load ${file}: ${response.status}`);
-              return { element, file, success: false };
+          for (const el of elements) {
+            const file = el.getAttribute("data-include");
+            if (!loadedFiles.has(file)) {
+              filesToLoad.push(file);
             }
-          } catch (error) {
-            console.error(`Error loading ${file}:`, error);
-            return { element, file, success: false };
           }
-        });
 
-        const results = await Promise.all(fetchPromises);
+          if (filesToLoad.length === 0) return;
 
-        for (const result of results) {
-          if (result.success) {
-            result.element.innerHTML = result.html;
-            result.element.classList.add("loaded");
-          } else {
-            result.element.innerHTML = `<p style="color: var(--text-secondary);">Failed to load ${result.file}</p>`;
-            result.element.classList.add("loaded");
+          // Fetch all files at this level
+          await Promise.all(
+            filesToLoad.map(async (file) => {
+              try {
+                const response = await fetch(file);
+                if (response.ok) {
+                  const html = await response.text();
+                  loadedFiles.set(file, html);
+
+                  // Check if this file has nested includes
+                  const temp = document.createElement("div");
+                  temp.innerHTML = html;
+                  await findAllFiles(temp);
+                } else {
+                  console.error(`Failed to load ${file}: ${response.status}`);
+                  loadedFiles.set(file, null);
+                }
+              } catch (error) {
+                console.error(`Error loading ${file}:`, error);
+                loadedFiles.set(file, null);
+              }
+            }),
+          );
+        }
+
+        // Step 2: Inject all the HTML we loaded
+        function insertContent(root) {
+          const elements = root.querySelectorAll("[data-include]:not(.loaded)");
+
+          for (const el of elements) {
+            const file = el.getAttribute("data-include");
+            const html = loadedFiles.get(file);
+
+            if (html) {
+              el.innerHTML = html;
+              el.classList.add("loaded");
+              insertContent(el);
+            } else if (html === null) {
+              el.innerHTML = `<p style="color: var(--text-secondary);">Failed to load ${file}</p>`;
+              el.classList.add("loaded");
+            }
           }
         }
 
-        const nestedLoadPromises = results.map(async (result) => {
-          if (result.success) {
-            await loadSections(result.element);
+        await findAllFiles(container);
+        insertContent(container);
 
-            if (result.file === "sections/profiles.html") {
-              await loadProfiles();
-            }
-          }
-        });
-
-        await Promise.all(nestedLoadPromises);
+        if (loadedFiles.has("sections/profiles.html")) {
+          await loadProfiles();
+        }
       }
 
       function toggleSection(header) {
