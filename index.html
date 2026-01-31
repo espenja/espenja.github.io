@@ -338,7 +338,7 @@
         border-left-color: #ef66ef;
       }
 
-      .section-wrapper.fictive {
+      .section-wrapper.profiles {
         border-left-color: #bc7a08;
       }
 
@@ -629,6 +629,42 @@
         transform: scale(0.95);
       }
 
+      /* Prevent FOUC - hide content until loaded */
+      [data-include]:not(.loaded) {
+        opacity: 0;
+        min-height: 20px;
+      }
+
+      [data-include].loaded {
+        opacity: 1;
+        transition: opacity 0.2s ease-in;
+      }
+
+      /* Loading indicator */
+      .page-loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--accent-primary);
+        transform-origin: left;
+        animation: loadingBar 2s ease-in-out infinite;
+        z-index: 9999;
+      }
+
+      @keyframes loadingBar {
+        0% {
+          transform: scaleX(0);
+        }
+        50% {
+          transform: scaleX(0.7);
+        }
+        100% {
+          transform: scaleX(0);
+        }
+      }
+
       [data-theme="light"] .theme-switcher {
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       }
@@ -663,21 +699,69 @@
           at your own peril.
         </div>
       </div>
-      <div data-include="sections/fps-gains.html"></div>
+      <div class="section-wrapper fps">
+        <h2 onclick="toggleSection(this)">Possible FPS gains</h2>
+        <div class="section-content collapsed">
+          <div data-include="sections/fps-gains.html"></div>
+        </div>
+      </div>
       <hr />
-      <div data-include="sections/core.html"></div>
+      <div class="section-wrapper must-haves">
+        <h2 onclick="toggleSection(this)">Core Addons</h2>
+        <div class="section-content collapsed">
+          <div data-include="sections/core/_index.html"></div>
+        </div>
+      </div>
       <hr />
-      <div data-include="sections/frames.html"></div>
+      <div class="section-wrapper frames">
+        <h2 onclick="toggleSection(this)">Frames</h2>
+        <div class="section-content collapsed">
+          <div data-include="sections/frames/_index.html"></div>
+        </div>
+      </div>
       <hr />
-      <div data-include="sections/cooldown-manager.html"></div>
+      <div class="section-wrapper cooldown-manager">
+        <h2 onclick="toggleSection(this)">
+          Cooldown Manager (Class Based WeakAura's Replacements)
+        </h2>
+        <div class="section-content collapsed">
+          <div data-include="sections/cooldown-manager/_index.html"></div>
+        </div>
+      </div>
       <hr />
-      <div data-include="sections/combat.html"></div>
+      <div class="section-wrapper combat">
+        <h2 onclick="toggleSection(this)">Combat/Raid/M+ Addons</h2>
+        <div class="section-content collapsed">
+          <div data-include="sections/combat/_index.html"></div>
+        </div>
+      </div>
       <hr />
-      <div data-include="sections/qol.html"></div>
+      <div class="section-wrapper qols">
+        <h2 onclick="toggleSection(this)">
+          Quality of Life Addons (Please read)
+        </h2>
+        <div class="section-content collapsed">
+          <div data-include="sections/qol/_index.html"></div>
+        </div>
+      </div>
       <hr />
-      <div data-include="sections/other.html"></div>
+      <div class="section-wrapper other">
+        <h2 onclick="toggleSection(this)">
+          Other good addons without going into detail
+        </h2>
+        <div class="section-content collapsed">
+          <div data-include="sections/other.html"></div>
+        </div>
+      </div>
       <hr />
-      <div data-include="sections/profiles.html"></div>
+      <div class="section-wrapper profiles">
+        <h2 class="section-header" onclick="toggleSection(this)">
+          Addon Profiles
+        </h2>
+        <div class="section-content collapsed">
+          <div data-include="sections/profiles.html"></div>
+        </div>
+      </div>
     </div>
     <hr />
     <p
@@ -686,9 +770,113 @@
       Last updated: 2026-01-27 23:36:56
     </p>
     <script>
-      // Load external HTML sections
-      async function loadSections() {
-        const includes = document.querySelectorAll("[data-include]");
+      // Add copy buttons to all pre tags
+      function addCopyButtons(container = document) {
+        const preTags = container.querySelectorAll("pre:not(.has-copy-button)");
+
+        preTags.forEach(function (pre) {
+          // Mark as processed
+          pre.classList.add("has-copy-button");
+
+          // Create wrapper div
+          const wrapper = document.createElement("div");
+          wrapper.className = "pre-wrapper";
+
+          // Replace pre with wrapper containing pre
+          pre.parentNode.insertBefore(wrapper, pre);
+          wrapper.appendChild(pre);
+
+          // Create copy button
+          const copyButton = document.createElement("button");
+          copyButton.className = "copy-button";
+          copyButton.textContent = "Copy";
+          copyButton.setAttribute("aria-label", "Copy code to clipboard");
+
+          // Add click handler
+          copyButton.addEventListener("click", function () {
+            const text = pre.textContent;
+
+            // Use modern clipboard API
+            navigator.clipboard
+              .writeText(text)
+              .then(function () {
+                // Show success feedback
+                copyButton.textContent = "Copied!";
+                copyButton.classList.add("copied");
+
+                // Reset after 2 seconds
+                setTimeout(function () {
+                  copyButton.textContent = "Copy";
+                  copyButton.classList.remove("copied");
+                }, 2000);
+              })
+              .catch(function (err) {
+                // Fallback for older browsers
+                console.error("Failed to copy text: ", err);
+                copyButton.textContent = "Failed";
+                setTimeout(function () {
+                  copyButton.textContent = "Copy";
+                }, 2000);
+              });
+          });
+
+          // Add button to wrapper
+          wrapper.insertBefore(copyButton, pre);
+        });
+      }
+
+      // Load external HTML sections recursively
+      async function loadProfiles() {
+        try {
+          console.log("Starting to load profiles...");
+          const response = await fetch("sections/profiles/profiles.json");
+          console.log("Profiles JSON response:", response.status);
+          const profiles = await response.json();
+          console.log("Loaded profiles:", profiles);
+          const container = document.getElementById("profiles-container");
+          console.log("Container found:", container);
+
+          if (!container) {
+            console.error("Profiles container not found!");
+            return;
+          }
+
+          for (const profile of profiles) {
+            const profileDiv = document.createElement("div");
+            const header = document.createElement("h4");
+            header.textContent = profile.name;
+            const pre = document.createElement("pre");
+
+            // Load profile content
+            try {
+              console.log(
+                `Loading profile: ${profile.name} from ${profile.source}`,
+              );
+              const contentResponse = await fetch(profile.source);
+              const content = await contentResponse.text();
+              pre.textContent = content;
+            } catch (error) {
+              console.error(`Failed to load profile ${profile.name}:`, error);
+              pre.textContent = "Error loading profile";
+            }
+
+            profileDiv.appendChild(header);
+            profileDiv.appendChild(pre);
+            container.appendChild(profileDiv);
+          }
+          console.log("Profiles loaded successfully");
+
+          // Add copy buttons to the newly created pre tags
+          addCopyButtons(container);
+        } catch (error) {
+          console.error("Failed to load profiles:", error);
+        }
+      }
+
+      async function loadSections(container = document) {
+        const includes = container.querySelectorAll(
+          "[data-include]:not(.loaded)",
+        );
 
         for (const element of includes) {
           const file = element.getAttribute("data-include");
@@ -697,19 +885,41 @@
             if (response.ok) {
               const html = await response.text();
               element.innerHTML = html;
+              element.classList.add("loaded");
+
+              // Recursively load any nested data-include elements
+              await loadSections(element);
+
+              // If this is the profiles section, load the profiles
+              if (file === "sections/profiles.html") {
+                await loadProfiles();
+              }
             } else {
               console.error(`Failed to load ${file}: ${response.status}`);
               element.innerHTML = `<p style="color: var(--text-secondary);">Failed to load ${file}</p>`;
+              element.classList.add("loaded");
             }
           } catch (error) {
             console.error(`Error loading ${file}:`, error);
             element.innerHTML = `<p style="color: var(--text-secondary);">Error loading ${file}</p>`;
+            element.classList.add("loaded");
           }
         }
       }
 
       // Load sections when page loads
-      document.addEventListener("DOMContentLoaded", loadSections);
+      document.addEventListener("DOMContentLoaded", async () => {
+        // Add loading indicator
+        const loadingBar = document.createElement("div");
+        loadingBar.className = "page-loading";
+        document.body.appendChild(loadingBar);
+
+        // Load all sections
+        await loadSections();
+
+        // Remove loading indicator
+        loadingBar.remove();
+      });
 
       function toggleSection(header) {
         const content = header.nextElementSibling;
@@ -756,56 +966,8 @@
         });
       })();
 
-      // Add copy buttons to all pre tags on page load
       document.addEventListener("DOMContentLoaded", function () {
-        const preTags = document.querySelectorAll("pre");
-
-        preTags.forEach(function (pre) {
-          // Create wrapper div
-          const wrapper = document.createElement("div");
-          wrapper.className = "pre-wrapper";
-
-          // Replace pre with wrapper containing pre
-          pre.parentNode.insertBefore(wrapper, pre);
-          wrapper.appendChild(pre);
-
-          // Create copy button
-          const copyButton = document.createElement("button");
-          copyButton.className = "copy-button";
-          copyButton.textContent = "Copy";
-          copyButton.setAttribute("aria-label", "Copy code to clipboard");
-
-          // Add click handler
-          copyButton.addEventListener("click", function () {
-            const text = pre.textContent;
-
-            // Use modern clipboard API
-            navigator.clipboard
-              .writeText(text)
-              .then(function () {
-                // Show success feedback
-                copyButton.textContent = "Copied!";
-                copyButton.classList.add("copied");
-
-                // Reset after 2 seconds
-                setTimeout(function () {
-                  copyButton.textContent = "Copy";
-                  copyButton.classList.remove("copied");
-                }, 2000);
-              })
-              .catch(function (err) {
-                // Fallback for older browsers
-                console.error("Failed to copy text: ", err);
-                copyButton.textContent = "Failed";
-                setTimeout(function () {
-                  copyButton.textContent = "Copy";
-                }, 2000);
-              });
-          });
-
-          // Add button to wrapper
-          wrapper.insertBefore(copyButton, pre);
-        });
+        addCopyButtons();
       });
     </script>
   </body>
