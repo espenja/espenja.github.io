@@ -663,6 +663,51 @@
         font-size: 0.9em;
         color: var(--text-secondary);
       }
+
+      /* Anchor link styles */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      .link-icon {
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        margin-left: 8px;
+        font-size: 0.8em;
+        cursor: pointer;
+        color: var(--text-secondary);
+        text-decoration: none;
+      }
+
+      .link-icon:hover {
+        color: var(--accent-primary);
+      }
+
+      h2:hover .link-icon,
+      h3:hover .link-icon {
+        opacity: 1;
+      }
+
+      .highlight-target {
+        animation: highlight-fade 2s ease-out;
+      }
+
+      @keyframes highlight-fade {
+        0% {
+          background-color: rgba(88, 166, 255, 0.3);
+        }
+        100% {
+          background-color: transparent;
+        }
+      }
+
+      .addon-block {
+        scroll-margin-top: 20px;
+      }
+
+      .section-wrapper {
+        scroll-margin-top: 20px;
+      }
     </style>
   </head>
   <body>
@@ -680,65 +725,126 @@
           your own stuff, and import at your own peril.
         </div>
       </div>
-      <div class="section-wrapper fps">
-        <h2 onclick="toggleSection(this)">Possible FPS gains</h2>
+      <div class="section-wrapper fps" id="fps">
+        <h2 onclick="toggleSection(this)">
+          Possible FPS gains<a
+            class="link-icon"
+            onclick="copyLink(event, 'fps')"
+            title="Copy link to section"
+            >🔗</a
+          >
+        </h2>
         <div class="section-content collapsed">
           <div data-include="sections/fps-gains.html"></div>
         </div>
       </div>
       <hr />
-      <div class="section-wrapper must-haves">
-        <h2 onclick="toggleSection(this)">Core Addons</h2>
+      <div class="section-wrapper must-haves" id="core-addons">
+        <h2 onclick="toggleSection(this)">
+          Core Addons<a
+            class="link-icon"
+            onclick="copyLink(event, 'core-addons')"
+            title="Copy link to section"
+            >🔗</a
+          >
+        </h2>
         <div class="section-content collapsed">
           <div data-include="sections/core/index.html"></div>
         </div>
       </div>
       <hr />
-      <div class="section-wrapper frames">
-        <h2 onclick="toggleSection(this)">Unit Frames</h2>
+      <div class="section-wrapper frames" id="unit-frames">
+        <h2 onclick="toggleSection(this)">
+          Unit Frames<a
+            class="link-icon"
+            onclick="copyLink(event, 'unit-frames')"
+            title="Copy link to section"
+            >🔗</a
+          >
+        </h2>
         <div class="section-content collapsed">
           <div data-include="sections/frames/index.html"></div>
         </div>
       </div>
       <hr />
-      <div class="section-wrapper cooldown-manager">
-        <h2 onclick="toggleSection(this)">Cooldown Manager</h2>
+      <div class="section-wrapper cooldown-manager" id="cooldown-manager">
+        <h2 onclick="toggleSection(this)">
+          Cooldown Manager<a
+            class="link-icon"
+            onclick="copyLink(event, 'cooldown-manager')"
+            title="Copy link to section"
+            >🔗</a
+          >
+        </h2>
         <div class="section-content collapsed">
           <div data-include="sections/cooldown-manager/index.html"></div>
         </div>
       </div>
       <hr />
-      <div class="section-wrapper combat">
-        <h2 onclick="toggleSection(this)">Combat/Raid/M+</h2>
+      <div class="section-wrapper combat" id="combat">
+        <h2 onclick="toggleSection(this)">
+          Combat/Raid/M+<a
+            class="link-icon"
+            onclick="copyLink(event, 'combat')"
+            title="Copy link to section"
+            >🔗</a
+          >
+        </h2>
         <div class="section-content collapsed">
           <div data-include="sections/combat/index.html"></div>
         </div>
       </div>
       <hr />
-      <div class="section-wrapper qols">
-        <h2 onclick="toggleSection(this)">Quality of Life</h2>
+      <div class="section-wrapper qols" id="qol">
+        <h2 onclick="toggleSection(this)">
+          Quality of Life<a
+            class="link-icon"
+            onclick="copyLink(event, 'qol')"
+            title="Copy link to section"
+            >🔗</a
+          >
+        </h2>
         <div class="section-content collapsed">
           <div data-include="sections/qol/index.html"></div>
         </div>
       </div>
       <hr />
-      <div class="section-wrapper visuals">
-        <h2 onclick="toggleSection(this)">Visuals</h2>
+      <div class="section-wrapper visuals" id="visuals">
+        <h2 onclick="toggleSection(this)">
+          Visuals<a
+            class="link-icon"
+            onclick="copyLink(event, 'visuals')"
+            title="Copy link to section"
+            >🔗</a
+          >
+        </h2>
         <div class="section-content collapsed">
           <div data-include="sections/visuals/index.html"></div>
         </div>
       </div>
       <hr />
-      <div class="section-wrapper other">
-        <h2 onclick="toggleSection(this)">Other good addons</h2>
+      <div class="section-wrapper other" id="other">
+        <h2 onclick="toggleSection(this)">
+          Other good addons<a
+            class="link-icon"
+            onclick="copyLink(event, 'other')"
+            title="Copy link to section"
+            >🔗</a
+          >
+        </h2>
         <div class="section-content collapsed">
           <div data-include="sections/other.html"></div>
         </div>
       </div>
       <hr />
-      <div class="section-wrapper profiles">
+      <div class="section-wrapper profiles" id="profiles">
         <h2 class="section-header" onclick="toggleSection(this)">
-          Addon Profiles
+          Addon Profiles<a
+            class="link-icon"
+            onclick="copyLink(event, 'profiles')"
+            title="Copy link to section"
+            >🔗</a
+          >
         </h2>
         <div class="section-content collapsed">
           <div data-include="sections/profiles.html"></div>
@@ -886,9 +992,44 @@
         await findAllFiles(container);
         insertContent(container);
 
+        // Add IDs and link icons to addon blocks
+        addAddonAnchors();
+
         if (loadedFiles.has("sections/profiles.html")) {
           await loadProfiles();
         }
+      }
+
+      function addAddonAnchors() {
+        const addonBlocks = document.querySelectorAll(".addon-block");
+
+        addonBlocks.forEach((block) => {
+          const h3 = block.querySelector("h3");
+          if (!h3) return;
+
+          const link = h3.querySelector("a");
+          if (!link) return;
+
+          // Generate ID from addon name
+          const addonName = link.textContent.trim();
+          const id = addonName
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-|-$/g, "");
+
+          // Add ID to the addon block
+          block.id = id;
+
+          // Add link icon if it doesn't exist
+          if (!h3.querySelector(".link-icon")) {
+            const linkIcon = document.createElement("a");
+            linkIcon.className = "link-icon";
+            linkIcon.textContent = "🔗";
+            linkIcon.title = "Copy link to addon";
+            linkIcon.onclick = (e) => copyLink(e, id);
+            h3.appendChild(linkIcon);
+          }
+        });
       }
 
       function toggleSection(header) {
@@ -901,6 +1042,72 @@
         const content = toggle.nextElementSibling;
         toggle.classList.toggle("collapsed");
         content.classList.toggle("collapsed");
+      }
+
+      function copyLink(event, id) {
+        event.stopPropagation();
+        const url = `${window.location.origin}${window.location.pathname}#${id}`;
+        navigator.clipboard
+          .writeText(url)
+          .then(() => {
+            const link = event.target;
+            const originalText = link.textContent;
+            link.textContent = "✓";
+            link.style.color = "var(--accent-primary)";
+            setTimeout(() => {
+              link.textContent = originalText;
+              link.style.color = "";
+            }, 1500);
+          })
+          .catch((err) => {
+            console.error("Failed to copy link:", err);
+          });
+      }
+
+      function handleHashNavigation() {
+        const hash = window.location.hash.substring(1);
+        if (!hash) return;
+
+        // Small delay to ensure all content is loaded
+        setTimeout(() => {
+          const targetElement = document.getElementById(hash);
+          if (!targetElement) return;
+
+          // Open parent sections if needed
+          let parent = targetElement.closest(".section-content");
+          while (parent) {
+            if (parent.classList.contains("collapsed")) {
+              const header = parent.previousElementSibling;
+              if (header && header.tagName === "H2") {
+                header.classList.remove("collapsed");
+                parent.classList.remove("collapsed");
+              }
+            }
+            parent = parent.parentElement?.closest(".section-content");
+          }
+
+          // Also expand if the target itself is a section
+          if (targetElement.classList.contains("section-wrapper")) {
+            const header = targetElement.querySelector("h2");
+            const content = targetElement.querySelector(".section-content");
+            if (header && content) {
+              header.classList.remove("collapsed");
+              content.classList.remove("collapsed");
+            }
+          }
+
+          // Scroll and highlight
+          setTimeout(() => {
+            targetElement.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+            targetElement.classList.add("highlight-target");
+            setTimeout(() => {
+              targetElement.classList.remove("highlight-target");
+            }, 2000);
+          }, 100);
+        }, 50);
       }
 
       // Theme switcher
@@ -935,7 +1142,14 @@
       document.addEventListener("DOMContentLoaded", async () => {
         await loadSections();
         addCopyButtons();
+        // Wait a bit for DOM to settle, then handle hash navigation
+        setTimeout(() => {
+          handleHashNavigation();
+        }, 100);
       });
+
+      // Handle hash changes
+      window.addEventListener("hashchange", handleHashNavigation);
     </script>
   </body>
 </html>
